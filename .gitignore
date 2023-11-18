@@ -1,0 +1,12 @@
+# Ignore data files
+raw_data
+*.csv
+
+# Ignore model files
+*.h5
+
+# Ignore virtual environment
+BTC_pred/
+Pipfile
+
+
