@@ -1,8 +1,8 @@
 # Multivariate Bitcoin Price Prediction using LSTM
 
-This project intends to serve as baseline to explore multivariate time series prediction for predicting the closing price of Bitcoin (BTC) using LSTM. Apart from considering only the trading features of BTC, the project goes further to consider the influence of certain other commodities, stocks and index (ex. Gold, Oil, S&P500, USDX etc.). This opens up a multitude of possibilities to further analyze and experiment with this baseline. From the feature engineering and modeling point of view, some ideas to take this project further could be:
+This project intends to serve as baseline to explore multivariate time series prediction for predicting the closing price of Bitcoin (BTC), using LSTM network. Apart from considering only the trading features of BTC, the project goes further to consider the influence of certain other commodities, stocks and index (ex. Gold, Oil, S&P500, USDX etc.) on BTC price. This opens up a multitude of possibilities to further analyze and experiment with this baseline. From the feature engineering and modeling point of view, some ideas to take this project further could be:
 
-1. Explore correlation vs causation (Hint: check correlation graph for different timelines, ex. data after 2018 and data after 2019) among considered features and analyze which features really contribute to better BTC price prediction. Features apart from the ones included can also be a consideration!
+1. Analyze correlation vs causation (Hint: check correlation graph for different timelines, ex. data after 2019 and data after 2021) among considered features and select most effective/contributory. Sticking to only BTC features, or adding features apart from the ones already included, can also be a consideration!
 2. Optimize training strategy to tackle overfitting/underfitting
 3. Experiment and compare with other time series models/architectures 
 
@@ -20,19 +20,23 @@ The project directory was setup as follows:
     - `BTC Historical Data.csv`
     - ...
     - `USD Index Historical Data.csv`
+- `.gitignore`
 - `main.py`
 - `pre_process.py`
 - `requirements.txt`
-- `.gitignore`
-- `README.md`
 - `LICENSE`
 
-Upon having the raw data folder saved under the project root directory, the project execution can be done using the follwing 2 steps. Make sure to change the data paths in the respective files accordingly before execution.
+Upon having the raw data folder saved under the project root directory, the project execution can be done using the following 2 steps. Make sure to change the data paths in the respective files accordingly before execution.
 ```bash
 python pre_process.py
+```
+```bash
 python main.py
 ```
 
+Post model training and inference, a plot visualizing model predictions vs original BTC price will be generated:
+
+<img width="815" alt="BTC price plot_pred vs org 3" src="https://github.com/VIJVIV/Multi_BTC_Pred/assets/146338220/c83c8c9e-37dd-4753-88ec-490930edffa7">
 
 
 
