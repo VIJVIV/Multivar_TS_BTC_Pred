@@ -13,7 +13,21 @@ pip install -r requirements.txt
 
 Raw data required for analysis can be directly downloaded from [here](https://drive.google.com/drive/folders/11qirLsWjUPwTzwq6b8Che-L1Mjk1l7e3?usp=sharing). The individual data categories was sourced from [Investing.com](https://www.investing.com/)
 
-Upon having the raw data folder saved under the project root directory, the project execution can be done using the follwing 2 steps. Make sure to change the data paths accordingly before execution.
+The project directory was setup as follows:
+
+#### Project Root
+- `raw_data`
+    - `BTC Historical Data.csv`
+    - ...
+    - `USD Index Historical Data.csv`
+- `main.py`
+- `pre_process.py`
+- `requirements.txt`
+- `.gitignore`
+- `README.md`
+- `LICENSE`
+
+Upon having the raw data folder saved under the project root directory, the project execution can be done using the follwing 2 steps. Make sure to change the data paths in the respective files accordingly before execution.
 ```bash
 python pre_process.py
 python main.py
