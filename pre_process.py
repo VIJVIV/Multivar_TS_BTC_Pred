@@ -31,7 +31,7 @@ def pre_process(master_df):
 
     #Sorting by date
     master_df['Date'] = pd.to_datetime(master_df['Date'], format='%m/%d/%Y')
-    master_df = master_df[master_df['Date'].dt.year >= 2021]                    #Focus on more recent years
+    master_df = master_df[master_df['Date'].dt.year >= 2019]                    #Timeline change to assess effect
     master_df.sort_values(by='Date', ascending=True, inplace=True)
     master_df.reset_index(drop=True, inplace=True)
 
@@ -59,16 +59,15 @@ def pre_process(master_df):
     plt.show()
 
     #Keeping most interesting features after correlation analysis
-    columns_to_drop = [col for col in master_df.columns if 'Date' not in col and 'BTC_Price' not in col
-                       and 'BTC_Open' not in col and 'BTC_High' not in col and 'BTC_Low' not in col
-                       and 'ETH_Price' not in col and 'Nas_Price' not in col and 'S&P_Price' not in col
-                       and 'Sil_Price' not in col and 'USD_Price' not in col]
+    columns_to_drop = [col for col in master_df.columns if 'Date' not in col and 'Price' not in col
+                       and 'BTC_Open' not in col and 'BTC_High' not in col and 'BTC_Low' not in col]
+    #columns_to_drop = [col for col in master_df.columns if 'Date' not in col and 'BTC' not in col]   #Only BTC features
     master_df.drop(columns=columns_to_drop, inplace=True)
 
     #BTC price plot
     plt.plot(master_df.index, master_df['BTC_Price'])
-    plt.xlabel('Days (Jan 04 2021 - Sep 15 2023)')
-    plt.ylabel('BTC price')
+    plt.xlabel('Days (Jan 01 2018 - Sep 15 2023)')
+    plt.ylabel('BTC price in $')
     plt.title('BTC price plot')
     plt.grid(True)
     plt.show()
@@ -77,8 +76,8 @@ def pre_process(master_df):
 
 
 if __name__ == "__main__":
-    raw_data_path = r'C:\Users\vijay\Desktop\Personal_projects\BTC-pred-model\raw_data'
-    data_path = r'C:\Users\vijay\Desktop\Personal_projects\BTC-pred-model'
+    raw_data_path = r'C:\Users\vijay\Desktop\Personal_projects\BTC-pred-model\raw_data' #Change accordingly
+    data_path = r'C:\Users\vijay\Desktop\Personal_projects\BTC-pred-model'              #Change accordingly
 
     master_df = merge_files_directory(raw_data_path)
     print('Master df after merge:')

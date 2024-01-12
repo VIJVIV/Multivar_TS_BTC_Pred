@@ -10,10 +10,10 @@ import matplotlib.pyplot as plt
 
 def train_val_test_split(df):
     df['Date'] = pd.to_datetime(df['Date'])
-    train_date_end = '2023-07-31'
-    lookback_for_val = '2023-06-01'
-    val_date_end = '2023-08-15'
-    lookback_for_test = '2023-06-16'
+    train_date_end = '2023-08-15'
+    lookback_for_val = '2023-08-05'
+    val_date_end = '2023-08-30'
+    lookback_for_test = '2023-08-01'
 
     train_df = df[df['Date'] <= train_date_end].reset_index(drop=True)
     val_df = df[(df['Date'] >= lookback_for_val) & (df['Date'] <= val_date_end)].reset_index(drop=True)
@@ -46,11 +46,11 @@ def windows(data, lookback, lookfront):
 
 
 if __name__ == "__main__":
-    df = pd.read_csv(r'C:\Users\vijay\Desktop\Personal_projects\BTC-pred-model\merged_preprocessed_data.csv')
+    df = pd.read_csv(r'C:\Users\vijay\Desktop\Personal_projects\BTC-pred-model\merged_preprocessed_data.csv') #Change accordingly
     train_data, val_data, test_data = train_val_test_split(df) 
     train_scaled, val_scaled, test_scaled, scaler = standardize(train_data, val_data, test_data) 
 
-    lookback_steps = 60                                         #Lookback last x days 
+    lookback_steps = 10                                         #Lookback last x days 
     predict_steps = 1                                           #and predict next y days
     X_train, y_train = windows(train_scaled, lookback=lookback_steps, lookfront=predict_steps)
     print('X train shape:', X_train.shape, 'y train shape:', y_train.shape)
@@ -66,10 +66,10 @@ if __name__ == "__main__":
                                           mode='min', verbose=1)
    
     model = Sequential()
-    model.add(LSTM(50, return_sequences=True, input_shape=(X_train.shape[1], X_train.shape[2])))
-    model.add(LSTM(40, return_sequences=True))
-    model.add(LSTM(30, return_sequences=False))
-    model.add(Dense(20))
+    model.add(LSTM(10, return_sequences=True, input_shape=(X_train.shape[1], X_train.shape[2])))
+    model.add(Dropout(0.2))
+    model.add(LSTM(5, return_sequences=False))
+    model.add(Dense(5))
     model.add(Dense(y_train.shape[1]))
     model.compile(optimizer=custom_optimizer, loss='mse')
 
@@ -93,6 +93,9 @@ if __name__ == "__main__":
     print(predictions.shape)
     print(y_test.shape)
 
+    pred_price_list = []
+    org_price_list = []
+
     for i in range(predictions.shape[0]):
         prediction = predictions[i].reshape(-1,1)
         y_test_compare = y_test[i].reshape(-1,1)
@@ -107,7 +110,21 @@ if __name__ == "__main__":
         print('Shape of preds -', pred_price.shape, 'and shape of orginal price -', org_price.shape)
         
         print('Original price -', org_price)
+        org_price_list.append(org_price)
         print('Predicted price -', pred_price)
+        pred_price_list.append(pred_price)
+
+    
+    #Plot original and predicted test prices to visualize prediction capability
+    org_prices = np.concatenate(org_price_list)
+    pred_prices = np.concatenate(pred_price_list)
+    plt.plot(org_prices, label='Original Prices', marker='o')
+    plt.plot(pred_prices, label='Predicted Prices', marker='o')
+    plt.xlabel('Days')
+    plt.ylabel('BTC price in $')
+    plt.title('Original and Predicted BTC Prices')
+    plt.legend()
+    plt.show()
 
     
 
