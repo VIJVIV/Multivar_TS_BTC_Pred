@@ -66,7 +66,7 @@ def pre_process(master_df):
 
     #BTC price plot
     plt.plot(master_df.index, master_df['BTC_Price'])
-    plt.xlabel('Days (Jan 01 2018 - Sep 15 2023)')
+    plt.xlabel('Days (Jan 01 2019 - Sep 15 2023)')
     plt.ylabel('BTC price in $')
     plt.title('BTC price plot')
     plt.grid(True)
